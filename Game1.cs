@@ -32,6 +32,9 @@ namespace FinalGameProject
         private int towerCost = 100;
         int timeBeforeNextSpawn;
         int enemiesLeft;
+        int acceleration;
+        int accelerationTimer;
+
         public bool gameOver = false;
 
         public Game1()
@@ -50,7 +53,8 @@ namespace FinalGameProject
             resources = 100;
             enemiesLeft = 10;
 
-
+            acceleration = 1;
+            accelerationTimer = 5;
 
 
             waypoints = new List<Vector2>
@@ -92,8 +96,6 @@ namespace FinalGameProject
         protected override void Update(GameTime gameTime)
         {
            
-            int accelerationTimer = 5;
-            int acceleration = 1;
 
 
             if(timeBeforeNextSpawn == 0 && enemiesLeft > 0)
