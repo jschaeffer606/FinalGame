@@ -98,7 +98,7 @@ namespace FinalGameProject
            
 
 
-            if(timeBeforeNextSpawn == 0 && enemiesLeft > 0)
+            if(timeBeforeNextSpawn <= 0 && enemiesLeft > 0)
             {
                 enemies.Add(new Enemy(enemyTexture, new Vector2(1, 32), 30f, 5, waypoints));
                 timeBeforeNextSpawn = 500;
@@ -106,7 +106,7 @@ namespace FinalGameProject
                 enemiesLeft--;
             }
 
-            if(enemiesLeft == 0)
+            if(enemiesLeft <= 0 && enemies.Count <=0)
             {
                 gameOver = true;
             }
@@ -147,13 +147,13 @@ namespace FinalGameProject
             enemies.RemoveAll(e => e.isDead);
             if(oldEnemiesCount > enemies.Count)
             {
-                resources += 25;
+                resources += 50;
             }
             
             if(gameTime.ElapsedGameTime.Seconds > accelerationTimer)
             {
                 accelerationTimer *= 2;
-                acceleration*= 2;
+                acceleration= (int)((float)acceleration*1.1);
             }
 
             

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FinalGameProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05283a6ee8e0428ecd396095a4f2ca3b966628ca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4f5adab58e57e04ac166d2b182d5c5844c9f44e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FinalGameProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FinalGameProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
