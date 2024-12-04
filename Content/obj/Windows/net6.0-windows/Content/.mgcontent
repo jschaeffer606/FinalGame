@@ -8,11 +8,13 @@
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/File.fx</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/FONT.spritefont</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/Idle.png</File>
+    <File>C:/Users/jscha/source/repos/FinalGameProject/Content/LightningTower.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/projectile.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/tileMapBackground.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/tower.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

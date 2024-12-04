@@ -1,7 +1,9 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/jscha/source/repos/FinalGameProject/Content/enemy.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/enemy.xnb","TextureProcessor","Texture2DContent",108,4181,0.1417101
-"C:/Users/jscha/source/repos/FinalGameProject/Content/FONT.spritefont","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/FONT.xnb","LocalizedFontProcessor","SpriteFontContent",2497,937,0.2078027
-"C:/Users/jscha/source/repos/FinalGameProject/Content/Idle.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Idle.xnb","TextureProcessor","Texture2DContent",1519,36949,0.0055351
-"C:/Users/jscha/source/repos/FinalGameProject/Content/projectile.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/projectile.xnb","TextureProcessor","Texture2DContent",87,341,0.0030821
-"C:/Users/jscha/source/repos/FinalGameProject/Content/tileMapBackground.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/tileMapBackground.xnb","TextureProcessor","Texture2DContent",159,8277,0.1374076
-"C:/Users/jscha/source/repos/FinalGameProject/Content/tower.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/tower.xnb","TextureProcessor","Texture2DContent",111,4181,0.0023998
+"C:/Users/jscha/source/repos/FinalGameProject/Content/enemy.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/enemy.xnb","TextureProcessor","Texture2DContent",108,4181,0.1331768
+"C:/Users/jscha/source/repos/FinalGameProject/Content/File.fx","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/File.xnb","EffectProcessor","CompiledEffectContent",692,766,0.2568381
+"C:/Users/jscha/source/repos/FinalGameProject/Content/FONT.spritefont","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/FONT.xnb","LocalizedFontProcessor","SpriteFontContent",2498,21535,0.1105519
+"C:/Users/jscha/source/repos/FinalGameProject/Content/Idle.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Idle.xnb","TextureProcessor","Texture2DContent",1519,36949,0.007082
+"C:/Users/jscha/source/repos/FinalGameProject/Content/LightningTower.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/LightningTower.xnb","TextureProcessor","Texture2DContent",108,4181,0.0045712
+"C:/Users/jscha/source/repos/FinalGameProject/Content/projectile.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/projectile.xnb","TextureProcessor","Texture2DContent",87,341,0.0045574
+"C:/Users/jscha/source/repos/FinalGameProject/Content/tileMapBackground.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/tileMapBackground.xnb","TextureProcessor","Texture2DContent",159,8277,0.0036572
+"C:/Users/jscha/source/repos/FinalGameProject/Content/tower.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/tower.xnb","TextureProcessor","Texture2DContent",111,4181,0.0028976

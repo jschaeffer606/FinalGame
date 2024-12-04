@@ -44,3 +44,4 @@ C:\Users\jscha\source\repos\FinalGameProject\obj\Release\net6.0-windows\refint\F
 C:\Users\jscha\source\repos\FinalGameProject\obj\Release\net6.0-windows\FinalGameProject.pdb
 C:\Users\jscha\source\repos\FinalGameProject\obj\Release\net6.0-windows\FinalGameProject.genruntimeconfig.cache
 C:\Users\jscha\source\repos\FinalGameProject\obj\Release\net6.0-windows\ref\FinalGameProject.dll
+C:\Users\jscha\source\repos\FinalGameProject\bin\Release\net6.0-windows\Content\LightningTower.xnb
