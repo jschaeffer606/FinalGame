@@ -73,12 +73,11 @@ namespace FinalGameProject
                 }
             }
 
-            //Third line is the mapsize
             var thirdLine = lines[2].Split(',');
             _mapWidth = int.Parse(thirdLine[0]);
             _mapHeight = int.Parse(thirdLine[1]);
 
-            ///Now we can create our map
+    
             var fourthLine = lines[3].Split(',');
             _map = new int[_mapWidth * _mapHeight];
             /* for (int i = 0; i < _mapWidth * _mapHeight; i++)
@@ -98,8 +97,6 @@ namespace FinalGameProject
                 {
 
                     spriteBatch.Draw(_tilesetTexture, new Vector2(x,y), _tiles[1], Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, .95f);
-
-
                 }
 
             }

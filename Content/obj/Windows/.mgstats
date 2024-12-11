@@ -2,6 +2,7 @@ Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Siz
 "C:/Users/jscha/source/repos/FinalGameProject/Content/enemy.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/enemy.xnb","TextureProcessor","Texture2DContent",108,4181,0.1331768
 "C:/Users/jscha/source/repos/FinalGameProject/Content/File.fx","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/File.xnb","EffectProcessor","CompiledEffectContent",692,766,0.2568381
 "C:/Users/jscha/source/repos/FinalGameProject/Content/FONT.spritefont","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/FONT.xnb","LocalizedFontProcessor","SpriteFontContent",2498,21535,0.1105519
+"C:/Users/jscha/source/repos/FinalGameProject/Content/FullEnemySprites.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/FullEnemySprites.xnb","TextureProcessor","Texture2DContent",1308,32853,0.1363325
 "C:/Users/jscha/source/repos/FinalGameProject/Content/Idle.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Idle.xnb","TextureProcessor","Texture2DContent",1519,36949,0.007082
 "C:/Users/jscha/source/repos/FinalGameProject/Content/LightningTower.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/LightningTower.xnb","TextureProcessor","Texture2DContent",108,4181,0.0045712
 "C:/Users/jscha/source/repos/FinalGameProject/Content/projectile.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/projectile.xnb","TextureProcessor","Texture2DContent",87,341,0.0045574

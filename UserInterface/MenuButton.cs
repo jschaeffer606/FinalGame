@@ -27,6 +27,7 @@ namespace FinalGameProject.UserInterface
             this.position = position;
             this.label = label;
             this.font = font;
+
             this.onClick = onClick;
             bounds = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
         }
@@ -49,9 +50,9 @@ namespace FinalGameProject.UserInterface
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            var color = isHovering ? Color.Gray : Color.Red;
+            var color = isHovering ? Color.Gray : Color.Gray * .5f;
             spriteBatch.Draw(texture, position, color);
-            spriteBatch.DrawString(font, label, new Vector2(position.X, position.Y + texture.Height + 5), Color.White);
+            spriteBatch.DrawString(font, label, new Vector2(position.X - 15, position.Y -texture.Height), Color.White);
         }
 
 

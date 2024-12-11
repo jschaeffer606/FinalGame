@@ -41,6 +41,8 @@ C:\Users\jscha\source\repos\FinalGameProject\obj\Debug\net6.0-windows\ref\FinalG
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\tilemap.txt
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\tileMapBackground.xnb
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Idle.xnb
-C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Arial.spritefont
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\File.xnb
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\FONT.xnb
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\LightningTower.xnb
+C:\Users\jscha\source\repos\FinalGameProject\obj\Debug\net6.0-windows\FinalGameProject.sourcelink.json
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\FullEnemySprites.xnb

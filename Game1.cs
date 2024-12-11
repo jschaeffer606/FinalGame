@@ -1,11 +1,12 @@
 ﻿
 using FinalGameProject.Enemies;
 using FinalGameProject.Towers;
+using FinalGameProject.UserInterface;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
-using FinalGameProject.UserInterface;
 
 
 namespace FinalGameProject
@@ -17,7 +18,8 @@ namespace FinalGameProject
         Lightning = 2
     }
 
-    public class WaveInformation {
+    public class WaveInformation
+    {
         public int enemies { get; }
         public float acceleration { get; }
         public int toughness { get; }
@@ -40,7 +42,7 @@ namespace FinalGameProject
         private TileMap _tileMap;
 
 
-        private List<WaveInformation> waveInfo = new() ;
+        private List<WaveInformation> waveInfo = new();
 
         private int waveNumber => waveInfo.Count;
 
@@ -58,14 +60,23 @@ namespace FinalGameProject
         private Texture2D projectileTexture;
         private Texture2D pathTexture;
         private Texture2D buttonTexture;
+        public Texture2D ghostedTower;
+
 
         private MouseState currentMouseState;
         private MouseState previousMouseState;
+
+
+        private bool[,] isPlacedArray = new bool[25, 15];
+
+
+
 
         private int toughness = 1;
         private int resources;
         private int towerCost = 150;
         private bool isPlacingTower;
+        private float selectedRange;
         int timeBeforeNextSpawn;
         int enemiesLeft;
         int acceleration;
@@ -93,7 +104,7 @@ namespace FinalGameProject
 
             acceleration = 1;
             accelerationTimer = 5;
-            WaveInformation waveOne = new WaveInformation(15,2f, 3);
+            WaveInformation waveOne = new WaveInformation(15, 2f, 3);
 
             WaveInformation waveTwo = new WaveInformation(25, 3f, 5);
 
@@ -127,10 +138,10 @@ namespace FinalGameProject
                 new Vector2(64, 288),
                 new Vector2(64, 384),
                 new Vector2(800, 384)
-      
+
             };
 
-
+            BlockOffTileBlocksFromTowers(waypoints);
 
 
             timeBeforeNextSpawn = 100;
@@ -138,6 +149,32 @@ namespace FinalGameProject
             _tileMap = new TileMap("tilemap.txt", waypoints);
             base.Initialize();
         }
+
+        private void BlockOffTileBlocksFromTowers(List<Vector2> positions)
+        {
+            for (int i = 0; i < positions.Count - 1; i++)
+            {
+                Vector2 vecOne = positions[i];
+                Vector2 vecTwo = positions[i + 1];
+
+                if (vecOne.X == vecTwo.X)
+                {
+                    for (int j = 0; j < Math.Abs(vecTwo.Y - vecOne.Y) / 32; j++)
+                    {
+                        isPlacedArray[(int)vecOne.X / 32, vecTwo.Y > vecOne.Y ? j + (int)vecOne.Y / 32 : (int)vecOne.Y / 32 - j] = true;
+
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < Math.Abs(vecTwo.X - vecOne.X) / 32; j++)
+                    {
+                        isPlacedArray[vecTwo.X > vecOne.X ? j + (int)vecOne.X / 32 : (int)vecOne.X / 32 - j, (int)vecOne.Y / 32] = true;
+                    }
+                }
+            }
+        }
+
 
         protected override void LoadContent()
         {
@@ -147,34 +184,32 @@ namespace FinalGameProject
             _tileMap.LoadContent(Content);
             towerTexture = Content.Load<Texture2D>("tower");
             lightningTowerTexture = Content.Load<Texture2D>("LightningTower");
-            enemyTexture = Content.Load<Texture2D>("enemy");
+            enemyTexture = Content.Load<Texture2D>("FullEnemySprites");
             projectileTexture = Content.Load<Texture2D>("projectile");
             font = Content.Load<SpriteFont>("FONT");
 
             buildMenu = new BuildMenu(font);
-            buildMenu.AddButton(towerTexture, new Vector2(10, 80), "Regular Tower: 150", () => StartPlacingTower(TowerType.Regular));
-            buildMenu.AddButton(lightningTowerTexture, new Vector2(10, 170), "Lightning Tower: 200", () => StartPlacingTower(TowerType.Lightning));
+            buildMenu.AddButton(towerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2 - 64, GraphicsDevice.Viewport.Height - 48), "Regular Tower: 150", () => StartPlacingTower(TowerType.Regular));
+            buildMenu.AddButton(lightningTowerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2 + 64, GraphicsDevice.Viewport.Height - 48), "Lightning Tower: 200", () => StartPlacingTower(TowerType.Lightning));
 
 
 
-            //1,32 here because for some reason 0,32 deletes the enemy
-            
-            
+
         }
 
         protected override void Update(GameTime gameTime)
         {
-            
 
 
-            if(timeBeforeNextSpawn <= 0 && enemiesLeft > 0)
+
+            if (timeBeforeNextSpawn <= 0 && enemiesLeft > 0)
             {
                 enemies.Add(new Enemy(enemyTexture, new Vector2(1, 32), 30f, toughness, waypoints));
                 timeBeforeNextSpawn = 500;
                 enemiesLeft--;
             }
 
-            if(enemiesLeft <= 0 && enemies.Count <=0)
+            if (enemiesLeft <= 0 && enemies.Count <= 0)
             {
                 waveIndex++;
                 resources += 50 * waveIndex;
@@ -187,12 +222,11 @@ namespace FinalGameProject
                     enemiesLeft = waveInfo[waveIndex].enemies;
                     acceleration = (int)waveInfo[waveIndex].acceleration;
                     toughness = waveInfo[waveIndex].toughness;
-                    
+
                 }
             }
 
             timeBeforeNextSpawn -= acceleration;
-
 
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -217,7 +251,7 @@ namespace FinalGameProject
             foreach (Enemy enemy in enemies)
             {
                 enemy.Update(gameTime);
-                if(enemy.ReachedEnd)
+                if (enemy.ReachedEnd)
                 {
                     gameOver = true;
                 }
@@ -225,20 +259,33 @@ namespace FinalGameProject
             }
             int oldEnemiesCount = enemies.Count;
             enemies.RemoveAll(e => e.isDead);
-            if(oldEnemiesCount > enemies.Count)
+            if (oldEnemiesCount > enemies.Count)
             {
                 resources += 10;
             }
-            
-            if(gameTime.ElapsedGameTime.Seconds > accelerationTimer)
+
+            if (gameTime.ElapsedGameTime.Seconds > accelerationTimer)
             {
                 accelerationTimer *= 2;
-                acceleration= (int)((float)acceleration*1.1);
+                acceleration = (int)((float)acceleration * 1.1);
             }
 
-            
 
-          
+
+
+            switch (towerTypeSelected)
+            {
+
+                case TowerType.Null: ghostedTower = null; break;
+                case TowerType.Regular:
+                    ghostedTower = towerTexture;
+                    selectedRange = Tower.range;
+                    break;
+                case TowerType.Lightning:
+                    ghostedTower = lightningTowerTexture;
+                    selectedRange = LightningTower.range;
+                    break;
+            }
             base.Update(gameTime);
         }
 
@@ -276,9 +323,6 @@ namespace FinalGameProject
             else
             {
 
-
-
-                
                 _tileMap.Draw(gameTime, _spriteBatch);
                 foreach (Enemy enemy in enemies)
                 {
@@ -303,61 +347,91 @@ namespace FinalGameProject
                 _spriteBatch.DrawString(font, resourceText, position, textColor);
 
                 buildMenu.Draw(_spriteBatch);
+                if (isPlacingTower)
+                {
+                    Texture2D pixel = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1); pixel.SetData(new[] { Color.White });
+
+                    _spriteBatch.Draw(ghostedTower, currentMouseState.Position.ToVector2(), Color.White * .25f);
+                    DrawCircleOutline(_spriteBatch, currentMouseState.Position.ToVector2(), selectedRange, 1, Color.White);
+                }
             }
-            
+
             base.Draw(gameTime);
             _spriteBatch.End();
         }
 
         private void StartPlacingTower(TowerType towerType)
         {
-            towerTypeSelected = towerType; 
+            towerTypeSelected = towerType;
             isPlacingTower = true;
         }
 
         private void TryPlaceTower(Vector2 position)
         {
-            if (isPlacingTower)
+            if (isPlacingTower && IsValidTowerPlacement(position))
             {
-                switch(towerTypeSelected)
+                //Adjusts the position so that it is in mulitples of 32
+                Vector2 adjustedPosition = new Vector2(((int)position.X / 32) * 32, ((int)position.Y / 32) * 32);
+
+                switch (towerTypeSelected)
                 {
-                    case TowerType.Null: return; break;
+
+                    case TowerType.Null: return;
                     case TowerType.Regular:
-                        if (IsValidTowerPlacement(position) && resources >= towerCost)
+                        if (resources >= towerCost)
                         {
-                            towers.Add(new Tower(towerTexture, position, 1f, 150f, projectileTexture));
+                            towers.Add(new Tower(towerTexture, adjustedPosition, 1f, projectileTexture));
                             resources -= towerCost;
                         }
                         break;
                     case TowerType.Lightning:
-                        if(IsValidTowerPlacement(position) && resources >= 200)
+                        if (resources >= 200)
                         {
-                            towers.Add(new LightningTower(lightningTowerTexture, position, 2f, 100f, projectileTexture));
+                            towers.Add(new LightningTower(lightningTowerTexture, adjustedPosition, 2f, projectileTexture));
                             resources -= 200;
                         }
                         break;
-
-
                 }
 
-                
+                int xTile = (int)position.X / 32;
+                int yTile = (int)position.Y / 32;
+                isPlacedArray[xTile, yTile] = true;
             }
         }
 
         private bool IsValidTowerPlacement(Vector2 position)
         {
-            if (position.X < 0 || position.Y < 0 || position.X > _graphics.GraphicsDevice.Viewport.Width || position.Y > _graphics.GraphicsDevice.Viewport.Height)
-                return false;
+            int xTile = (int)position.X / 32;
+            int yTile = (int)position.Y / 32;
 
-            foreach (var tower in towers)
-            {
-                if (Vector2.Distance(tower.Position, position) < towerTexture.Width || Vector2.Distance(tower.Position, position) < towerTexture.Height)
-                    return false;
-            }
+            if (position.X < 0 || position.Y < 0 || position.X > _graphics.GraphicsDevice.Viewport.Width || position.Y > _graphics.GraphicsDevice.Viewport.Height || isPlacedArray[xTile, yTile])
+                return false;
 
             return true;
         }
 
+
+        public void DrawCircleOutline(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Vector2 center, float radius, int segments, Color color)
+        {
+            Texture2D pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+            pixel.SetData(new[] { Color.White });
+
+            double increment = Math.PI * 2.0 / segments;
+            double theta = 0.0;
+
+            for (int i = 0; i < segments; i++)
+            {
+                float x1 = (float)(radius * Math.Cos(theta)) + center.X;
+                float y1 = (float)(radius * Math.Sin(theta)) + center.Y;
+                float x2 = (float)(radius * Math.Cos(theta + increment)) + center.X;
+                float y2 = (float)(radius * Math.Sin(theta + increment)) + center.Y;
+
+                spriteBatch.Draw(pixel, new Vector2(x1, y1), color);
+
+                theta += increment;
+            }
+
+        }
 
 
 

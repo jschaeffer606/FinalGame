@@ -16,7 +16,7 @@ namespace FinalGameProject.Towers
         private Texture2D texture;
         private Vector2 position;
         private float fireRate;
-        private float range;
+        public static float range { get; } = 150f;
         private float timeSinceLastShot;
         private float damage;
         private Texture2D projectileTexture; 
@@ -25,13 +25,12 @@ namespace FinalGameProject.Towers
 
         public Vector2 Position => position;
 
-        public Tower(Texture2D texture, Vector2 position, float fireRate, float range, Texture2D projectileTexture)
+        public Tower(Texture2D texture, Vector2 position, float fireRate, Texture2D projectileTexture)
         {
             this.texture = texture;
             this.position = position;
             this.fireRate = fireRate;
             this.timeSinceLastShot = 0f;
-            this.range = range;
             this.projectileTexture = projectileTexture;
             this.projectiles = new List<Projectile>();
 

@@ -17,7 +17,7 @@ namespace FinalGameProject.Towers
 
         public void Draw(SpriteBatch spriteBatch);
 
-
+        public static float range { get; }
 
 
 
