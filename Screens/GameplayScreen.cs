@@ -296,7 +296,7 @@ namespace FinalGameProject.Screens
                 enemies.RemoveAll(e => e.isDead);
                 if (oldEnemiesCount > enemies.Count)
                 {
-                    resources += 10;
+                    resources += NewGameScreen.resourceGain;
                 }
 
                 if (gameTime.ElapsedGameTime.Seconds > accelerationTimer)
