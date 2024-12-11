@@ -8,22 +8,43 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace FinalGameProject.Screens
 {
+    public enum TowerType
+    {
+        Null = 0,
+        Regular = 1,
+        Lightning = 2
+    }
+
+    public class WaveInformation
+    {
+        public int enemies { get; }
+        public float acceleration { get; }
+        public int toughness { get; }
+
+        public WaveInformation(int e, float a, int t)
+        {
+            enemies = e;
+            acceleration = a;
+            toughness = t;
+        }
+    }
+
     // This screen implements the actual game logic. It is just a
     // placeholder to get the idea across: you'll probably want to
     // put some more interesting gameplay in here!
     public class GameplayScreen : GameScreen
     {
-        private ContentManager _content;
+        private ContentManager Content;
         private SpriteFont _gameFont;
 
 
 
         private float _pauseAlpha;
         private readonly InputAction _pauseAction;
-        private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont font;
 
@@ -87,8 +108,8 @@ namespace FinalGameProject.Screens
         // Load graphics content for the game
         public override void Activate()
         {
-            if (_content == null)
-                _content = new ContentManager(ScreenManager.Game.Services, "Content");
+            if (Content == null)
+                Content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             towers = new List<ITower>();
             enemies = new List<Enemy>();
@@ -141,6 +162,22 @@ namespace FinalGameProject.Screens
             timeBeforeNextSpawn = 100;
 
             _tileMap = new TileMap("tilemap.txt", waypoints);
+            GraphicsDevice GraphicsDevice = ScreenManager.GraphicsDevice;
+
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+           
+            // TODO: use this.Content to load your game content here
+            _tileMap.LoadContent(Content);
+            towerTexture = Content.Load<Texture2D>("tower");
+            lightningTowerTexture = Content.Load<Texture2D>("LightningTower");
+            enemyTexture = Content.Load<Texture2D>("FullEnemySprites");
+            projectileTexture = Content.Load<Texture2D>("projectile");
+            font = Content.Load<SpriteFont>("FONT");
+
+            buildMenu = new BuildMenu(font);
+            buildMenu.AddButton(towerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2 - 64, GraphicsDevice.Viewport.Height - 48), "Regular Tower: 150", () => StartPlacingTower(TowerType.Regular));
+            buildMenu.AddButton(lightningTowerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2 + 64, GraphicsDevice.Viewport.Height - 48), "Lightning Tower: 200", () => StartPlacingTower(TowerType.Lightning));
+
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
@@ -179,7 +216,7 @@ namespace FinalGameProject.Screens
 
         public override void Unload()
         {
-            _content.Unload();
+            Content.Unload();
         }
 
         // This method checks the GameScreen.IsActive property, so the game will
@@ -335,7 +372,7 @@ namespace FinalGameProject.Screens
         }
 
 
-        protected void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
 
             ScreenManager.GraphicsDevice.Clear(Color.Green);
@@ -449,7 +486,7 @@ namespace FinalGameProject.Screens
             int xTile = (int)position.X / 32;
             int yTile = (int)position.Y / 32;
 
-            if (position.X < 0 || position.Y < 0 || position.X > _graphics.GraphicsDevice.Viewport.Width || position.Y > _graphics.GraphicsDevice.Viewport.Height || isPlacedArray[xTile, yTile])
+            if (position.X < 0 || position.Y < 0 || position.X > ScreenManager.GraphicsDevice.Viewport.Width || position.Y > ScreenManager.GraphicsDevice.Viewport.Height || isPlacedArray[xTile, yTile])
                 return false;
 
             return true;
