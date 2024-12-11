@@ -86,6 +86,11 @@ namespace FinalGameProject.Screens
             ExitScreen();
         }
 
+        protected void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreen());
+        }
+
         // Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
         protected void OnCancel(object sender, PlayerIndexEventArgs e)
         {

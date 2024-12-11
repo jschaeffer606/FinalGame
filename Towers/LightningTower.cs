@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework.Audio;
 
 namespace FinalGameProject.Towers
 {
@@ -23,16 +23,18 @@ namespace FinalGameProject.Towers
         private Texture2D projectileTexture;
         private List<Projectile> projectiles;
         private bool onCoolDown = false;
-
+        private SoundEffect soundFire;
+        
 
         public Vector2 Position => position;
 
-        public LightningTower(Texture2D texture, Vector2 position, float fireRate, Texture2D projectileTexture)
+        public LightningTower(Texture2D texture, SoundEffect s, Vector2 position, float fireRate, Texture2D projectileTexture)
         {
             this.texture = texture;
             this.position = position;
             this.fireRate = fireRate;
             this.timeSinceLastShot = 0f;
+            soundFire = s;
             damage = 1;
             this.projectileTexture = projectileTexture;
             this.projectiles = new List<Projectile>();
@@ -48,6 +50,7 @@ namespace FinalGameProject.Towers
                 {
                     if(Vector2.Distance(position, enemy.Position) <= range)
                     {
+                        soundFire.Play();
                         timeSinceLastShot = 0f;
                         enemy.TakeDamage((int)damage);
                         onCoolDown = true;

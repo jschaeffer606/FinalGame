@@ -8,27 +8,25 @@ namespace FinalGameProject.Screens
     {
         public MainMenuScreen() : base("Main Menu")
         {
-            var playGameMenuEntry = new MenuEntry("Play Game");
-            var optionsMenuEntry = new MenuEntry("Options");
+            var playGameMenuEntry = new MenuEntry("New Game");
+            
             var exitMenuEntry = new MenuEntry("Exit");
 
-            playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
-            optionsMenuEntry.Selected += OptionsMenuEntrySelected;
+            playGameMenuEntry.Selected += OptionsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             MenuEntries.Add(playGameMenuEntry);
-            MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
 
         private void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,new GameplayScreen(), new CutSceeneScreen());
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,new GameplayScreen());
         }
 
         private void OptionsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            ScreenManager.AddScreen(new OptionsMenuScreen(), e.PlayerIndex);
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new NewGameScreen());
         }
 
         protected override void OnCancel(PlayerIndex playerIndex)

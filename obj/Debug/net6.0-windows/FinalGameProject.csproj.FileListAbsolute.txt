@@ -46,3 +46,12 @@ C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\FO
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\LightningTower.xnb
 C:\Users\jscha\source\repos\FinalGameProject\obj\Debug\net6.0-windows\FinalGameProject.sourcelink.json
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\FullEnemySprites.xnb
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\gradient.xnb
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\blank.xnb
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Danish Mega Pony v. 4 OST - Track 02 (Fire Level).wma
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Danish Mega Pony v. 4 OST - Track 02 (Fire Level).xnb
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Danish Mega Pony v. 4 OST - Track 02 (Fire Level).mp3
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Hit_Hurt.xnb
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Laser_Shoot2.xnb
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\sound.xnb
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Hit_Hurt.wav

@@ -4,17 +4,29 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/jscha/source/repos/FinalGameProject/Content/../../../../Downloads/sound.wav</File>
+    <File>C:/Users/jscha/source/repos/FinalGameProject/Content/blank.png</File>
+    <File>C:/Users/jscha/source/repos/FinalGameProject/Content/Danish Mega Pony v. 4 OST - Track 02 (Fire Level).mp3</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/enemy.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/File.fx</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/FONT.spritefont</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/FullEnemySprites.png</File>
+    <File>C:/Users/jscha/source/repos/FinalGameProject/Content/gradient.png</File>
+    <File>C:/Users/jscha/source/repos/FinalGameProject/Content/Hit_Hurt.wav</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/Idle.png</File>
+    <File>C:/Users/jscha/source/repos/FinalGameProject/Content/Laser_Shoot2.wav</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/LightningTower.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/projectile.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/tileMapBackground.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/tower.png</File>
   </SourceFiles>
   <DestFiles>
+    <File>sound.wav</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

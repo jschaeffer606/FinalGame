@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 
 namespace FinalGameProject.Enemies
 {
@@ -14,11 +15,13 @@ namespace FinalGameProject.Enemies
         private float velocity;
         private int health;
         private int hitTimer;
-        
+        private float speedFactor;
 
+        private Color color;
         public bool isDead;
         private List<Vector2> waypoints;
         private int currentWaypointIndex;
+        private SoundEffect hurtSound;
 
         public Vector2 Position { get => position; }
         public bool ReachedEnd { get; private set; }
@@ -26,16 +29,36 @@ namespace FinalGameProject.Enemies
         public bool IsHit { get; private set; } = false;
         private Rectangle spriteBounds;
 
-        public Enemy(Texture2D texture, Vector2 position, float speed, int health, List<Vector2> waypoints)
+        public Enemy(Texture2D texture, SoundEffect s, Vector2 position, float speed, int health, List<Vector2> waypoints)
         {
             this.texture = texture;
             this.position = position;
-            this.velocity = speed;
+            this.velocity = 100;
+            this.speedFactor = speed;
             this.health = health;
             this.currentWaypointIndex = 0;
             this.waypoints = waypoints;
             this.hitTimer = 5;
             spriteBounds = DetermineBounds(health);
+            hurtSound = s;
+            if(velocity >= 200)
+            {
+                color = Color.Blue;
+            }
+            else if(velocity >= 150)
+
+            {
+                color = Color.White;
+            }
+            else if(velocity >= 100)
+            {
+                color = Color.Yellow;
+
+            }
+            else
+            {
+                color = Color.Red;
+            }
             isDead = false;
         }
 
@@ -61,8 +84,28 @@ namespace FinalGameProject.Enemies
         public void Update(GameTime gameTime)
         {
             if (!ReachedEnd) { MoveTowardsWaypoint(gameTime); }
+            velocity = (50 + health * 25) * speedFactor;
+            if (velocity >= 200)
+            {
+                color = Color.Blue;
+            }
+            else if (velocity >= 150)
+
+            {
+                color = Color.White;
+            }
+            else if (velocity >= 100)
+            {
+                color = Color.Yellow;
+
+            }
+            else
+            {
+                color = Color.Red;
+            }
             if (IsHit)
             {
+                
                 if (hitTimer == 0)
                 {
                     IsHit = false;
@@ -78,7 +121,7 @@ namespace FinalGameProject.Enemies
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, spriteBounds, IsHit ? Color.White*.5f : Color.Red,0f, Vector2.Zero, 1f, SpriteEffects.None, 0.1f);
+            spriteBatch.Draw(texture, position, spriteBounds, IsHit ? Color.White*.5f : color,0f, Vector2.Zero, 1f, SpriteEffects.None, 0.1f);
         }
 
        
@@ -87,6 +130,7 @@ namespace FinalGameProject.Enemies
         public void TakeDamage(int damage)
         {
             health -= damage;
+            hurtSound.Play();
             IsHit = true;
             hitTimer = 5;
             if (health <= 0)

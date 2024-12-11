@@ -3,12 +3,12 @@ using FinalGameProject.ScreenManagement;
 using FinalGameProject.Towers;
 using FinalGameProject.UserInterface;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 
 namespace FinalGameProject.Screens
 {
@@ -78,6 +78,9 @@ namespace FinalGameProject.Screens
 
         private bool[,] isPlacedArray = new bool[25, 15];
 
+        private SoundEffect turretFire;
+        private SoundEffect lightningFire;
+        private SoundEffect hurtSound;
 
 
 
@@ -114,27 +117,17 @@ namespace FinalGameProject.Screens
             towers = new List<ITower>();
             enemies = new List<Enemy>();
 
-            resources = 150;
-            enemiesLeft = 10;
+            resources = NewGameScreen.startingResources;
+
 
             acceleration = 1;
             accelerationTimer = 5;
-            WaveInformation waveOne = new WaveInformation(15, 2f, 3);
 
-            WaveInformation waveTwo = new WaveInformation(25, 3f, 5);
+            for (int i = 0; i < NewGameScreen.numRounds; i++)
+            {
+                waveInfo.Add(new WaveInformation(NewGameScreen.startingEnemyCount + i * NewGameScreen.enemyGainPerRound, 2 + 2 * i, 3 + NewGameScreen.hpFactor * i));
+            }
 
-            WaveInformation waveThree = new WaveInformation(50, 4f, 10);
-
-            WaveInformation waveFour = new WaveInformation(60, 8f, 12);
-
-
-
-
-
-            waveInfo.Add(waveOne);
-            waveInfo.Add(waveTwo);
-            waveInfo.Add(waveThree);
-            waveInfo.Add(waveFour);
 
 
             enemiesLeft = waveInfo[waveIndex].enemies;
@@ -165,7 +158,9 @@ namespace FinalGameProject.Screens
             GraphicsDevice GraphicsDevice = ScreenManager.GraphicsDevice;
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-           
+            turretFire = Content.Load<SoundEffect>("Laser_Shoot2");
+            lightningFire = Content.Load<SoundEffect>("sound");
+            hurtSound = Content.Load<SoundEffect>("Hit_Hurt");
             // TODO: use this.Content to load your game content here
             _tileMap.LoadContent(Content);
             towerTexture = Content.Load<Texture2D>("tower");
@@ -175,8 +170,8 @@ namespace FinalGameProject.Screens
             font = Content.Load<SpriteFont>("FONT");
 
             buildMenu = new BuildMenu(font);
-            buildMenu.AddButton(towerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2 - 64, GraphicsDevice.Viewport.Height - 48), "Regular Tower: 150", () => StartPlacingTower(TowerType.Regular));
-            buildMenu.AddButton(lightningTowerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2 + 64, GraphicsDevice.Viewport.Height - 48), "Lightning Tower: 200", () => StartPlacingTower(TowerType.Lightning));
+            buildMenu.AddButton(towerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2 - 96, GraphicsDevice.Viewport.Height - 48), "Regular Tower: 150", () => StartPlacingTower(TowerType.Regular));
+            buildMenu.AddButton(lightningTowerTexture, new Vector2(GraphicsDevice.Viewport.Width / 2 + 96, GraphicsDevice.Viewport.Height - 48), "Lightning Tower: 200", () => StartPlacingTower(TowerType.Lightning));
 
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
@@ -235,7 +230,7 @@ namespace FinalGameProject.Screens
             {
                 if (timeBeforeNextSpawn <= 0 && enemiesLeft > 0)
                 {
-                    enemies.Add(new Enemy(enemyTexture, new Vector2(1, 32), 30f, toughness, waypoints));
+                    enemies.Add(new Enemy(enemyTexture, hurtSound, new Vector2(1, 32), NewGameScreen.enemySpeed + waveIndex, NewGameScreen.hpFactor, waypoints));
                     timeBeforeNextSpawn = 500;
                     enemiesLeft--;
                 }
@@ -243,7 +238,7 @@ namespace FinalGameProject.Screens
                 if (enemiesLeft <= 0 && enemies.Count <= 0)
                 {
                     waveIndex++;
-                    resources += 50 * waveIndex;
+                    resources += NewGameScreen.resourceGain * waveIndex;
                     if (waveIndex == waveNumber)
                     {
                         gameOver = true;
@@ -269,6 +264,13 @@ namespace FinalGameProject.Screens
                 {
                     Vector2 mousePosition = new Vector2(currentMouseState.X, currentMouseState.Y);
                     TryPlaceTower(mousePosition);
+                }
+
+                if (currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released)
+                {
+                    buildMenu.Selecting = false;
+                    isPlacingTower = false;
+
                 }
 
                 foreach (ITower tower in towers)
@@ -423,7 +425,7 @@ namespace FinalGameProject.Screens
 
                 }
 
-                string resourceText = $"Resources: {resources}      Enemies Left: {enemiesLeft}    Waves Left: {waveNumber - waveIndex}";
+                string resourceText = $"Resources: {resources}      Enemies: {enemiesLeft + enemies.Count}    Waves Left: {waveNumber - waveIndex}";
 
                 Vector2 position = new Vector2(10, 10);
                 Color textColor = Color.White;
@@ -435,7 +437,8 @@ namespace FinalGameProject.Screens
                     Texture2D pixel = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1); pixel.SetData(new[] { Color.White });
 
                     _spriteBatch.Draw(ghostedTower, currentMouseState.Position.ToVector2(), Color.White * .25f);
-                    DrawCircleOutline(_spriteBatch, currentMouseState.Position.ToVector2(), selectedRange, 1, Color.White);
+                    
+                    DrawCircle(_spriteBatch, currentMouseState.Position.ToVector2(), selectedRange, 100, Color.White);
                 }
             }
 
@@ -462,14 +465,14 @@ namespace FinalGameProject.Screens
                     case TowerType.Regular:
                         if (resources >= towerCost)
                         {
-                            towers.Add(new Tower(towerTexture, adjustedPosition, 1f, projectileTexture));
+                            towers.Add(new Tower(towerTexture, turretFire, adjustedPosition, 1f, projectileTexture));
                             resources -= towerCost;
                         }
                         break;
                     case TowerType.Lightning:
                         if (resources >= 200)
                         {
-                            towers.Add(new LightningTower(lightningTowerTexture, adjustedPosition, 2f, projectileTexture));
+                            towers.Add(new LightningTower(lightningTowerTexture, lightningFire, adjustedPosition, 2f, projectileTexture));
                             resources -= 200;
                         }
                         break;
@@ -493,27 +496,36 @@ namespace FinalGameProject.Screens
         }
 
 
-        public void DrawCircleOutline(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Vector2 center, float radius, int segments, Color color)
+        public void DrawCircle(SpriteBatch spriteBatch, Vector2 center, float radius, int segments, Color color)
         {
             Texture2D pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             pixel.SetData(new[] { Color.White });
 
+            Vector2[] vertices = new Vector2[segments];
             double increment = Math.PI * 2.0 / segments;
             double theta = 0.0;
 
             for (int i = 0; i < segments; i++)
             {
-                float x1 = (float)(radius * Math.Cos(theta)) + center.X;
-                float y1 = (float)(radius * Math.Sin(theta)) + center.Y;
-                float x2 = (float)(radius * Math.Cos(theta + increment)) + center.X;
-                float y2 = (float)(radius * Math.Sin(theta + increment)) + center.Y;
-
-                spriteBatch.Draw(pixel, new Vector2(x1, y1), color);
-
+                float x = (float)(radius * Math.Cos(theta)) + center.X;
+                float y = (float)(radius * Math.Sin(theta)) + center.Y;
+                vertices[i] = new Vector2(x, y);
                 theta += increment;
             }
 
+            for (int i = 0; i < segments - 1; i++)
+            {
+                Vector2 start = vertices[i];
+                Vector2 end = vertices[i + 1];
+                spriteBatch.Draw(pixel, start, null, color, (float)Math.Atan2(end.Y - start.Y, end.X - start.X), Vector2.Zero, new Vector2(Vector2.Distance(start, end), 1), SpriteEffects.None, 0.99f);
+            }
+
+            // Draw the last segment to complete the circle
+            spriteBatch.Draw(pixel, vertices[segments - 1], null, color, (float)Math.Atan2(vertices[0].Y - vertices[segments - 1].Y, vertices[0].X - vertices[segments - 1].X), Vector2.Zero, new Vector2(Vector2.Distance(vertices[segments - 1], vertices[0]), 1), SpriteEffects.None, 0.99f);
+
+            pixel.Dispose();
         }
+
     }
 }
 

@@ -52,7 +52,7 @@ namespace FinalGameProject.UserInterface
         {
             var color = isHovering ? Color.Gray : Color.Gray * .5f;
             spriteBatch.Draw(texture, position, color);
-            spriteBatch.DrawString(font, label, new Vector2(position.X - 15, position.Y -texture.Height), Color.White);
+            spriteBatch.DrawString(font, label, new Vector2(position.X - 25, position.Y -texture.Height), Color.White);
         }
 
 

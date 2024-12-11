@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Microsoft.Xna.Framework.Media;
 
 
 namespace FinalGameProject
@@ -69,6 +70,9 @@ namespace FinalGameProject
 
         //public bool gameOver = false;
 
+
+        private Song backgroundMusic;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -85,16 +89,20 @@ namespace FinalGameProject
         }
         private void AddInitialScreens()
         {
-            _screenManager.AddScreen(new GameplayScreen(), new PlayerIndex());
-            
-
+            _screenManager.AddScreen(new BackgroundScreen(), null);
+            _screenManager.AddScreen(new MainMenuScreen(), null);
         }
          protected override void Initialize()
         {
             base.Initialize();
         }
 
-        protected override void LoadContent() { }
+        protected override void LoadContent() {
+            backgroundMusic = Content.Load<Song>("Danish Mega Pony v. 4 OST - Track 02 (Fire Level)");
+            // Play the background music and loop it
+             MediaPlayer.IsRepeating = true;
+             MediaPlayer.Play(backgroundMusic);
+        }
 
         protected override void Update(GameTime gameTime)
         {

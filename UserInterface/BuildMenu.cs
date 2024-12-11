@@ -39,6 +39,7 @@ namespace FinalGameProject.UserInterface
                 if(button.clicked == true)
                 {
                     isclicked = true;
+                    
                 }
             }
             Selecting = isclicked;

@@ -7,6 +7,8 @@ using FinalGameProject.Enemies;
 using FinalGameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+
 
 
 namespace FinalGameProject.Towers
@@ -21,15 +23,17 @@ namespace FinalGameProject.Towers
         private float damage;
         private Texture2D projectileTexture; 
         private List<Projectile> projectiles;
+        private SoundEffect fireSound;
 
 
         public Vector2 Position => position;
 
-        public Tower(Texture2D texture, Vector2 position, float fireRate, Texture2D projectileTexture)
+        public Tower(Texture2D texture, SoundEffect s, Vector2 position, float fireRate, Texture2D projectileTexture)
         {
             this.texture = texture;
             this.position = position;
             this.fireRate = fireRate;
+            fireSound = s;
             this.timeSinceLastShot = 0f;
             this.projectileTexture = projectileTexture;
             this.projectiles = new List<Projectile>();
@@ -82,6 +86,7 @@ namespace FinalGameProject.Towers
             
             if(target != null)
             {
+                fireSound.Play();
                 Projectile projectile = new Projectile(projectileTexture, new Vector2(position.X + 16, position.Y + 16), target.Position, 500f, 1, target);
                 projectiles.Add(projectile);
 

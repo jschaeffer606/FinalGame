@@ -19,6 +19,12 @@
     <None Update="Content\Arial.spritefont">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Content\Danish Mega Pony v. 4 OST - Track 02 %28Fire Level%29.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Hit_Hurt.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Content\tilemap.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
