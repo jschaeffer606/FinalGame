@@ -1,6 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/jscha/source/repos/FinalGameProject/Content/../../../../Downloads/sound.wav","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Content/sound.xnb","SoundEffectProcessor","SoundEffectContent",85136,85197,0.2476382
 "C:/Users/jscha/source/repos/FinalGameProject/Content/blank.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Content/blank.xnb","TextureProcessor","Texture2DContent",187,149,0.1100242
+"C:/Users/jscha/source/repos/FinalGameProject/Content/CustomCursor.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Content/CustomCursor.xnb","TextureProcessor","Texture2DContent",90,341,0.1174919
 "C:/Users/jscha/source/repos/FinalGameProject/Content/Danish Mega Pony v. 4 OST - Track 02 (Fire Level).mp3","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Content/Danish Mega Pony v. 4 OST - Track 02 (Fire Level).xnb","SongProcessor","SongContent",1324559,167,1.0145308
 "C:/Users/jscha/source/repos/FinalGameProject/Content/enemy.png","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Content/enemy.xnb","TextureProcessor","Texture2DContent",108,4181,0.1049631
 "C:/Users/jscha/source/repos/FinalGameProject/Content/File.fx","C:/Users/jscha/source/repos/FinalGameProject/Content/bin/Windows/Content/File.xnb","EffectProcessor","CompiledEffectContent",692,766,0.3449856

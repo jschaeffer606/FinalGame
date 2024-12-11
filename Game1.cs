@@ -72,6 +72,8 @@ namespace FinalGameProject
 
 
         private Song backgroundMusic;
+        private Texture2D customCursorTexture;
+
 
         public Game1()
         {
@@ -84,7 +86,7 @@ namespace FinalGameProject
 
             _screenManager = new ScreenManager(this);
             Components.Add(_screenManager);
-
+            IsMouseVisible = false;
             AddInitialScreens();
         }
         private void AddInitialScreens()
@@ -102,6 +104,7 @@ namespace FinalGameProject
             // Play the background music and loop it
              MediaPlayer.IsRepeating = true;
              MediaPlayer.Play(backgroundMusic);
+            customCursorTexture = Content.Load<Texture2D>("CustomCursor");
         }
 
         protected override void Update(GameTime gameTime)
@@ -117,6 +120,15 @@ namespace FinalGameProject
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.Green);
+            _screenManager.SpriteBatch.Begin();
+
+
+            MouseState mouseState = Mouse.GetState();
+            Vector2 cursorPosition = new Vector2(mouseState.X, mouseState.Y);
+            _screenManager.SpriteBatch.Draw(customCursorTexture, cursorPosition, Microsoft.Xna.Framework.Color.White);
+
+            _screenManager.SpriteBatch.End();
+
             base.Draw(gameTime);
             
         }

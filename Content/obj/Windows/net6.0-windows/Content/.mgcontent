@@ -6,6 +6,7 @@
   <SourceFiles>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/../../../../Downloads/sound.wav</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/blank.png</File>
+    <File>C:/Users/jscha/source/repos/FinalGameProject/Content/CustomCursor.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/Danish Mega Pony v. 4 OST - Track 02 (Fire Level).mp3</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/enemy.png</File>
     <File>C:/Users/jscha/source/repos/FinalGameProject/Content/File.fx</File>
@@ -22,6 +23,7 @@
   </SourceFiles>
   <DestFiles>
     <File>sound.wav</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

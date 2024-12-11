@@ -70,7 +70,8 @@ namespace FinalGameProject.Screens
         private Texture2D pathTexture;
         private Texture2D buttonTexture;
         public Texture2D ghostedTower;
-
+        private Texture2D customCursorTexture;
+        Texture2D pixel;
 
         private MouseState currentMouseState;
         private MouseState previousMouseState;
@@ -119,6 +120,7 @@ namespace FinalGameProject.Screens
 
             resources = NewGameScreen.startingResources;
 
+            customCursorTexture = Content.Load<Texture2D>("CustomCursor");
 
             acceleration = 1;
             accelerationTimer = 5;
@@ -161,6 +163,8 @@ namespace FinalGameProject.Screens
             turretFire = Content.Load<SoundEffect>("Laser_Shoot2");
             lightningFire = Content.Load<SoundEffect>("sound");
             hurtSound = Content.Load<SoundEffect>("Hit_Hurt");
+            pixel = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
+
             // TODO: use this.Content to load your game content here
             _tileMap.LoadContent(Content);
             towerTexture = Content.Load<Texture2D>("tower");
@@ -380,6 +384,8 @@ namespace FinalGameProject.Screens
             ScreenManager.GraphicsDevice.Clear(Color.Green);
             _spriteBatch.Begin();
 
+
+
             if (gameOver)
             {
                 if (enemies.Count > 0)
@@ -438,10 +444,13 @@ namespace FinalGameProject.Screens
 
                     _spriteBatch.Draw(ghostedTower, currentMouseState.Position.ToVector2(), Color.White * .25f);
                     
-                    DrawCircle(_spriteBatch, currentMouseState.Position.ToVector2(), selectedRange, 100, Color.White);
+                    DrawCircle(_spriteBatch, currentMouseState.Position.ToVector2() + new Vector2(16, 16), selectedRange, 100, Color.White);
                 }
             }
 
+            MouseState mouseState = Mouse.GetState();
+            Vector2 cursorPosition = new Vector2(mouseState.X, mouseState.Y);
+            _spriteBatch.Draw(customCursorTexture, cursorPosition, Color.White);
             base.Draw(gameTime);
             _spriteBatch.End();
         }
@@ -498,7 +507,7 @@ namespace FinalGameProject.Screens
 
         public void DrawCircle(SpriteBatch spriteBatch, Vector2 center, float radius, int segments, Color color)
         {
-            Texture2D pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+           
             pixel.SetData(new[] { Color.White });
 
             Vector2[] vertices = new Vector2[segments];
@@ -523,7 +532,6 @@ namespace FinalGameProject.Screens
             // Draw the last segment to complete the circle
             spriteBatch.Draw(pixel, vertices[segments - 1], null, color, (float)Math.Atan2(vertices[0].Y - vertices[segments - 1].Y, vertices[0].X - vertices[segments - 1].X), Vector2.Zero, new Vector2(Vector2.Distance(vertices[segments - 1], vertices[0]), 1), SpriteEffects.None, 0.99f);
 
-            pixel.Dispose();
         }
 
     }

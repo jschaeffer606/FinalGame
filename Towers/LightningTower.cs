@@ -68,7 +68,7 @@ namespace FinalGameProject.Towers
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, onCoolDown ? Color.Cyan: Color.White);
+            spriteBatch.Draw(texture, position, onCoolDown ? Color.Cyan * .5f: Color.Cyan);
             foreach (Projectile projectile in projectiles)
             {
                 projectile.Draw(spriteBatch);

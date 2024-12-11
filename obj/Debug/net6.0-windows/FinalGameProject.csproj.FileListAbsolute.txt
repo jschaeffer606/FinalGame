@@ -55,3 +55,4 @@ C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Hi
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Laser_Shoot2.xnb
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\sound.xnb
 C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\Hit_Hurt.wav
+C:\Users\jscha\source\repos\FinalGameProject\bin\Debug\net6.0-windows\Content\CustomCursor.xnb

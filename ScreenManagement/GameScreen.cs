@@ -5,12 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
+using System.Reflection.Metadata;
+using Microsoft.Xna.Framework.Content;
 
 namespace FinalGameProject.ScreenManagement
 {
     public abstract class GameScreen
     {
-
+        private ContentManager Content;
         /// <summary>
         /// Indicates if this screen is a popup
         /// </summary>
@@ -75,6 +79,8 @@ namespace FinalGameProject.ScreenManagement
         /// </summary>
         public ScreenManager ScreenManager { get; internal set; }
 
+        private Texture2D customCursorTexture;
+
         /// <summary>
         /// Gets the index of the player who is currently controlling this screen,
         /// or null if it is accepting input from any player. 
@@ -92,7 +98,13 @@ namespace FinalGameProject.ScreenManagement
         /// Activates the screen.  Called when the screen is added to the screen manager 
         /// or the game returns from being paused.
         /// </summary>
-        public virtual void Activate() { }
+        public virtual void Activate() {
+
+            if (Content == null)
+                Content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+            customCursorTexture = Content.Load<Texture2D>("CustomCursor");
+        }
 
         /// <summary>
         /// Deactivates the screen.  Called when the screen is removed from the screen manager 
@@ -178,7 +190,11 @@ namespace FinalGameProject.ScreenManagement
         /// when another screen has taken the focus.
         /// </summary>
         /// <param name="gameTime">An object representing time in the game</param>
-        public virtual void Draw(GameTime gameTime) { }
+        public virtual void Draw(GameTime gameTime) {
+
+
+
+        }
 
         /// <summary>
         /// This method tells the screen to exit, allowing it time to transition off

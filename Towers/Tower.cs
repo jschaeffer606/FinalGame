@@ -76,7 +76,7 @@ namespace FinalGameProject.Towers
 
             foreach(Enemy e in enemies)
             {
-                if (Vector2.Distance(e.Position, position) < range)
+                if (Vector2.Distance(e.Position, position) <= range)
                 {
                     target = e;
                     break;

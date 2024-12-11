@@ -166,13 +166,13 @@ namespace FinalGameProject.Screens
             // Draw the menu title centered on the screen
             var titlePosition = new Vector2(graphics.Viewport.Width / 2, 80);
             var titleOrigin = font.MeasureString(_menuTitle) / 2;
-            var titleColor = new Color(192, 192, 192) * TransitionAlpha;
+            var titleColor = Color.Black * TransitionAlpha;
             const float titleScale = 1.25f;
 
             titlePosition.Y -= transitionOffset * 100;
-
+            
             spriteBatch.DrawString(font, _menuTitle, titlePosition, titleColor,
-                0, titleOrigin, titleScale, SpriteEffects.None, 0);
+                0, titleOrigin, titleScale * 2, SpriteEffects.None, 0);
 
             spriteBatch.End();
         }
